@@ -21,36 +21,19 @@ func part1() {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.Fields(scanner.Text())
-		fmt.Printf("line: %v\n", line)
 
-		var prevLevel int
 		var prevDiffSign bool
 		isSafe := true
-		for i, str := range line {
-			level, _ := strconv.Atoi(str)
+		prevLevel, _ := strconv.Atoi(line[0])
+		for i := 1; i < len(line); i++ {
+			level, _ := strconv.Atoi(line[i])
 
-			if i == 0 {
-				prevLevel = level
-				continue
-			}
+			diff := float64(prevLevel - level)
+			diffSign := math.Signbit(diff)
+			absDiff := math.Abs(diff)
 
-			diff := prevLevel - level
-			diffSign := math.Signbit(float64(diff))
-			absDiff := math.Abs(float64(diff))
-
-			fmt.Println(prevLevel, "-", level, "=", diff)
-			if absDiff > 3 || absDiff < 1 {
-				isSafe = false
-				break
-			}
-
-			if i == 1 {
-				prevLevel = level
-				prevDiffSign = diffSign
-				continue
-			}
-
-			if prevDiffSign != diffSign {
+			if (absDiff > 3 || absDiff < 1) ||
+				(i > 1 && prevDiffSign != diffSign) {
 				isSafe = false
 				break
 			}
