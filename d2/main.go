@@ -51,6 +51,11 @@ func part1() {
 	fmt.Printf("part1: %d\n", ans)
 }
 
+/*
+I could NOT find the edge case that my solution was failing for until I compared my solution with others. removing i and j are not the only edge cases.
+Example: 19 22 20 19 16 12
+My solution would try remvoing 22 and 20, but removing the first 19 would make it safe.
+*/
 func part2() {
 	file, _ := os.Open("input")
 	defer file.Close()
